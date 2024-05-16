@@ -26,4 +26,19 @@ public class CustomerController {
         log.info("Received request to create customer: {}", createCustomerRequest);
         customerService.createCustomer(createCustomerRequest);
     }
+
+    @PutMapping(path = "{customerId}")
+    public void updateCustomer(@PathVariable("customerId") Long id,
+                               @RequestParam(required = false) String name,
+                               @RequestParam(required = false) String email,
+                               @RequestParam(required = false) String address) {
+        log.info("Received request to update customer with id {}: name={}, email={}, address={}", id, name, email, address);
+        customerService.updateCustomer(id, name, email, address);
+    }
+
+    @DeleteMapping(path = "{customerId}")
+    public void deleteCustomer(@PathVariable("customerId") Long id) {
+        log.info("Received request to delete customer with id {}", id);
+        customerService.deleteCustomer(id);
+    }
 }
