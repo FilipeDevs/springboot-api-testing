@@ -1,5 +1,7 @@
 package com.filipedevs.api.customer;
 
+import com.filipedevs.api.exception.CustomerEmailUnavailableException;
+import com.filipedevs.api.exception.CustomerNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +27,7 @@ public class CustomerService {
         Optional<Customer> customerByEmail = customerRepository.findByEmail(createCustomerRequest.getEmail());
 
         if (customerByEmail.isPresent()) {
-            throw new IllegalStateException("Email taken");
+            throw new CustomerEmailUnavailableException("The email " + createCustomerRequest.getEmail() + " is already taken.");
         }
 
         Customer customer = new Customer(
@@ -40,7 +42,7 @@ public class CustomerService {
     public void updateCustomer(Long id, String name, String email, String address) {
         Optional<Customer> customerById = customerRepository.findById(id);
         if (customerById.isEmpty()) {
-            throw new IllegalStateException("Customer with id " + id + " does not exist");
+            throw new CustomerNotFoundException("Customer with id " + id + " does not exist");
         }
         Customer customer = customerById.get();
 
@@ -52,7 +54,7 @@ public class CustomerService {
             Optional<Customer> customerByEmail = customerRepository.findByEmail(email);
 
             if (customerByEmail.isPresent()) {
-                throw new IllegalStateException("Email taken");
+                throw new CustomerEmailUnavailableException("The email " + customerByEmail.get().getEmail() + " is already taken.");
             }
             customer.setEmail(email);
         }
@@ -67,7 +69,7 @@ public class CustomerService {
     public void deleteCustomer(Long id) {
         boolean exists = customerRepository.existsById(id);
         if (!exists) {
-            throw new IllegalStateException("Customer with id " + id + " does not exist");
+            throw new CustomerNotFoundException("Customer with id " + id + " does not exist");
         }
         customerRepository.deleteById(id);
     }
