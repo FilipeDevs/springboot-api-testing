@@ -54,7 +54,7 @@ public class CustomerService {
             Optional<Customer> customerByEmail = customerRepository.findByEmail(email);
 
             if (customerByEmail.isPresent()) {
-                throw new CustomerEmailUnavailableException("The email " + customerByEmail.get().getEmail() + " is already taken.");
+                throw new CustomerEmailUnavailableException("The email " + email + " is already taken.");
             }
             customer.setEmail(email);
         }
