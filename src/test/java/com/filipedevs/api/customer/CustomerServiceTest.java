@@ -3,7 +3,6 @@ package com.filipedevs.api.customer;
 import com.filipedevs.api.exception.CustomerEmailUnavailableException;
 import com.filipedevs.api.exception.CustomerNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
