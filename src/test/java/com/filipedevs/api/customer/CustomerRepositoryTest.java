@@ -1,17 +1,13 @@
 package com.filipedevs.api.customer;
 
+import com.filipedevs.api.AbstractTestcontainersTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
 import java.util.Optional;
 
@@ -21,21 +17,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class CustomerRepositoryTest {
+class CustomerRepositoryTest extends AbstractTestcontainersTest {
 
-    @Container
-    @ServiceConnection
-    static PostgreSQLContainer<?> postgreSQLContainer
-            = new PostgreSQLContainer<>(DockerImageName.parse("postgres:16.2"));
 
     @Autowired
     CustomerRepository underTest;
-
-    @Test
-    void canEstablishConnection() {
-        assertThat(postgreSQLContainer.isCreated()).isTrue();
-        assertThat(postgreSQLContainer.isRunning()).isTrue();
-    }
 
     @BeforeEach
     void setUp() {
